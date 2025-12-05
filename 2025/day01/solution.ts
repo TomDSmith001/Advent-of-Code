@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 
 const password: string[] = [];
 
-rl.on('line', (line) => {
+rl.on('line', (line: string) => {
     password.push(line);
 })
 
