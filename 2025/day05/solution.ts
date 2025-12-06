@@ -37,25 +37,25 @@ function part1() {
         }
     }
     const endTime = performance.now()
-    console.log(`${count} - Time Taken: ${Math.ceil(endTime - startTime)}ms`)
+    console.log(`${count} - Time Taken: ${endTime - startTime}ms`)
 }
 
 function part2() {
     const startTime = performance.now()
     ingredientRanges.sort((a,b) => a[0] - b[0])
-    const checkedRanges: [number,number][] = [ingredientRanges[0]];
+    let [lastStart, lastEnd] = ingredientRanges[0]
+    let count = 0
     for (const range of ingredientRanges.slice(1)) {
-        const lastChecked = checkedRanges[checkedRanges.length -1]
-        if (!(lastChecked[1] + 1 < range[0])) {
-            lastChecked[1] = Math.max(lastChecked[1], range[1]);
+        if ((range[0] - 1) <= lastEnd) {
+            lastEnd = Math.max(lastEnd, range[1]);
         } else {
-            checkedRanges.push(range);
+            count += lastEnd - lastStart + 1
+            lastStart = range[0]
+            lastEnd = range[1]
         }
     }
-    let count = 0
-    for (const range of checkedRanges) {
-        count += (range[1] - range[0]) + 1;
-    }
+    count += lastEnd - lastStart + 1
+
     const endTime = performance.now()
     console.log(`${count} - Time Taken: ${endTime - startTime}ms`)
 }
