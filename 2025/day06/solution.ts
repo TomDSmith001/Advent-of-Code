@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import * as readline from 'readline';
 
-const fileStream = fs.createReadStream('./input.txt')
+const fileStream = fs.createReadStream('./home.txt')
 const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
