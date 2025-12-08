@@ -55,19 +55,13 @@ function part2() {
     const part2Input = fileLines.filter((_, index) => index % 2 === 0);
     const paths = new Map<string, number>();
 
-    let startIndex = 0;
-    for (let col = 0; col < part2Input[0].length; col++) {
-        if (part2Input[0][col] === 'S') {
-            startIndex = col;
-            break;
-        }
-    }
+    let startIndex = part2Input[0].indexOf('S');
 
     function countPaths(row: number, col: number): number {
         if (row >= part2Input.length) {
             return 1;
         }
-        const key = `${row},${col}`;
+        const key = `${row}-${col}`;
         if (paths.has(key)) {
             return paths.get(key)!;
         }
