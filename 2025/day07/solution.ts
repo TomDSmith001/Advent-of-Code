@@ -63,7 +63,7 @@ function part2() {
             return paths.get(key)!;
         }
 
-        let route = 0;
+        let route: number;
 
         if (col >= 0 && col < part2Input[row].length && part2Input[row][col] === '^') {
                 route = countPaths(row + 1, col - 1) + countPaths(row + 1, col + 1);
