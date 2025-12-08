@@ -1,3 +1,5 @@
+// Advent of Code 2025 - Day 7: Laboratories
+
 // Advent of Code 2025 - Day 7
 
 // Advent of Code 2025 - Day 6
@@ -18,21 +20,20 @@ rl.on('line', (line: string) => {
 
 rl.on('close', () => {
     part1()
-    // part2()
+    part2()
 });
 
 function part1() {
     const startTime = performance.now()
-    const part1: string[][] = fileLines
     const splits = new Set<string>()
 
-    const startIndex = part1[0].indexOf('S')
-    part1[1][startIndex] = '|'
+    const startIndex = fileLines[0].indexOf('S')
+    fileLines[1][startIndex] = '|'
 
-    for (let index = 2; index < part1.length; index++) {
-        const newLine = part1[index]
-        part1[index].forEach((value: string, internalIndex) => {
-            if (part1[index-1][internalIndex] === '|'){
+    for (let index = 2; index < fileLines.length; index++) {
+        const newLine = fileLines[index]
+        fileLines[index].forEach((value: string, internalIndex) => {
+            if (fileLines[index-1][internalIndex] === '|'){
                 if (value === '^'){
                     newLine[internalIndex - 1] = '|'
                     newLine[internalIndex + 1] = '|'
@@ -42,16 +43,48 @@ function part1() {
                 }
             }
         })
-        part1[index] = newLine
+        fileLines[index] = newLine
     }
 
     const endTime = performance.now()
     console.log(`${splits.size} - Time Taken: ${endTime - startTime}ms`)
 }
 
-// function part2() {
-//     const startTime = performance.now()
-//
-//     const endTime = performance.now()
-//     console.log(`${total} - Time Taken: ${endTime - startTime}ms`)
-// }
+function part2() {
+    const startTime = performance.now()
+    const part2Input = fileLines.filter((_, index) => index % 2 === 0);
+    const paths = new Map<string, number>();
+
+    let startIndex = 0;
+    for (let col = 0; col < part2Input[0].length; col++) {
+        if (part2Input[0][col] === 'S') {
+            startIndex = col;
+            break;
+        }
+    }
+
+    function countPaths(row: number, col: number): number {
+        if (row >= part2Input.length) {
+            return 1;
+        }
+        const key = `${row},${col}`;
+        if (paths.has(key)) {
+            return paths.get(key)!;
+        }
+
+        let route = 0;
+
+        if (col >= 0 && col < part2Input[row].length && part2Input[row][col] === '^') {
+                route = countPaths(row + 1, col - 1) + countPaths(row + 1, col + 1);
+        } else {
+            route = countPaths(row + 1, col);
+        }
+
+        paths.set(key, route);
+        return route;
+    }
+
+    const total = countPaths(1, startIndex);
+    const endTime = performance.now()
+    console.log(`${total} - Time Taken: ${endTime - startTime}ms`)
+}
