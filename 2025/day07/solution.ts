@@ -1,8 +1,5 @@
-// Advent of Code 2025 - Day 7: Laboratories
-
 // Advent of Code 2025 - Day 7
 
-// Advent of Code 2025 - Day 6
 import * as fs from 'fs';
 import * as readline from 'readline';
 
